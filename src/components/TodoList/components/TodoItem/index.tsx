@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react"
 import { Button, Switch } from "antd"
-import { EditOutlined } from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons'
 import { ITodoItemComponent } from "./types.ts"
 import { TodoStatusEnum } from "@/types.ts"
 import { useAppDispatch } from "@/hooks/redux.ts"
@@ -8,12 +8,12 @@ import { changeTodoStatus } from "@/store/todoSlice"
 import { TodoItemViewMode } from "@/components/TodoList/types.ts"
 import './style.scss'
 
-const TodoItem: FC<ITodoItemComponent> = ({ title, status, index, setOpenModal}): ReactNode => {
+const TodoItem: FC<ITodoItemComponent> = ({ title, status, index, setOpenModal, id}): ReactNode => {
   const dispatch = useAppDispatch()
 
   const changeStatus = (): void => {
     dispatch(changeTodoStatus({
-      index,
+      id,
       status: status === TodoStatusEnum.finished ? TodoStatusEnum.notFinished : TodoStatusEnum.finished
     }))
   }

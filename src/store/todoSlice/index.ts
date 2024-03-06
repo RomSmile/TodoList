@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { v4 as uuidv4 } from 'uuid'
-import { toast } from "react-toastify"
 import { ITodoItem, TodoStatusEnum } from "@/types.ts"
-import { validateTodoItem } from "@/store/todoSlice/helpers.ts";
+import { validateTodoItem } from "@/store/todoSlice/helpers.ts"
 
 interface IInitialState {
   todos: ITodoItem[]
@@ -21,21 +20,18 @@ export const TodoSlice = createSlice({
         state.todos = [ ...state.todos, { ...action.payload, id: uuidv4(), status: TodoStatusEnum.notFinished } ]
       }
     },
-    changeTodoStatus: (state, action: PayloadAction<{ index: number, status: TodoStatusEnum}>) => {
-      const { index, status } = action.payload
+    changeTodoStatus: (state, action: PayloadAction<{ id: string, status: TodoStatusEnum}>) => {
+      const { id, status } = action.payload
+      const indexOfTodo = state.todos.findIndex((todoItem) => todoItem.id === id)
 
-      if (index < state.todos.length) {
-        state.todos[index].status = status
-      } else {
-        toast("this task does not exist", {
-          type: "error",
-        })
-      }
+      state.todos[indexOfTodo].status = status
     },
-    editTodoItem: (state, action: PayloadAction<{ index: number, todoItem: ITodoItem}>) => {
-      const { index, todoItem } = action.payload
+    editTodoItem: (state, action: PayloadAction<{ id: string, todoItem: ITodoItem}>) => {
+      const { id, todoItem } = action.payload
+      const indexOfTodo = state.todos.findIndex((todoItem) => todoItem.id === id)
+
       if (validateTodoItem(action.payload.todoItem)) {
-        state.todos[index] = todoItem
+        state.todos[indexOfTodo] = todoItem
       }
     }
   },

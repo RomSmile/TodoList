@@ -5,5 +5,4 @@ export interface ITodoModal {
   mode: TodoItemViewMode
   todoItem: ITodoItem | null
   onCloseModal: () => void
-  index: number
 }

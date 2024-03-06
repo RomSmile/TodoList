@@ -8,10 +8,9 @@ const TodoModal: FC<ITodoModal> = ({
   mode,
   todoItem,
   onCloseModal,
-  index
 }): ReactNode => {
   return mode === TodoItemViewMode.edit ?
-    <EditModal todoItem={todoItem} onCloseModal={onCloseModal} index={index} />
+    <EditModal todoItem={todoItem} onCloseModal={onCloseModal} />
     : <ViewModal todoItem={todoItem} onCloseModal={onCloseModal} />
 }
 

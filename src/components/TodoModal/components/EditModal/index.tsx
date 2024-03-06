@@ -5,10 +5,9 @@ import { addTodo, editTodoItem } from "@/store/todoSlice"
 import { useAppDispatch } from "@/hooks/redux.ts"
 import { ITodoModal } from "@/components/TodoModal/types.ts"
 
-const EditModal: FC<Omit<ITodoModal, 'mode'>> = ({
+const EditModal: FC<Omit<ITodoModal, 'mode' | 'index'>> = ({
   todoItem,
   onCloseModal,
-  index
 }) => {
   const dispatch = useAppDispatch()
   const [newTodoItem, setNewTodoItem] = useState<ITodoItem | null>(
@@ -26,7 +25,7 @@ const EditModal: FC<Omit<ITodoModal, 'mode'>> = ({
     if (todoItem === null) {
       dispatch(addTodo(newTodoItem as ITodoItem))
     } else {
-      dispatch(editTodoItem({ index, todoItem: newTodoItem as ITodoItem }))
+      dispatch(editTodoItem({ id: todoItem.id, todoItem: newTodoItem as ITodoItem }))
     }
     onCloseModal()
   }
