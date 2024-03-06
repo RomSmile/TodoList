@@ -1,0 +1,54 @@
+.header-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 80px;
+  box-shadow: 8px 3px 8px rgba(246, 241, 241, 0.53);
+  background-color: #5423e7;
+  padding: 10px 20px;
+
+  @media screen and (max-width: 640px) {
+    justify-content: space-between;
+  }
+}
+
+
+.styled-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 24px;
+  width: 150px;
+  color: #fff;
+  margin: 0;
+
+  @media screen and (max-width: 480px) {
+    font-size: 20px;
+  }
+
+  & a {
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+  }
+
+  & span {
+    font-size: 14px;
+
+    @media screen and (max-width: 480px) {
+      font-size: 10px;
+    }
+
+    & a {
+      cursor: pointer;
+      text-decoration: none;
+      color: #fff;
+      transition: color 0.3s;
+
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+}
