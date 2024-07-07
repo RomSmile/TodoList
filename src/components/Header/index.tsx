@@ -1,8 +1,8 @@
-import { ReactNode } from "react"
+import { FC } from "react"
 import './style.scss'
 
 
-const Header = (): ReactNode => {
+const Header: FC = () => {
   return (
     <>
       <div className="header-wrapper">

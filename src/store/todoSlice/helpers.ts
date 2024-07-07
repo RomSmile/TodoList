@@ -1,4 +1,4 @@
-import {ITodoItem} from "@/types.ts";
+import {ITodoItem} from "@/types";
 import {toast} from "react-toastify";
 
 export function validateTodoItem(todoItem: ITodoItem): boolean {

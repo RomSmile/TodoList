@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { Modal } from "antd"
-import { ITodoModal } from "@/components/TodoModal/types.ts"
+import { ITodoModal } from "@/components/TodoModal/types"
 
 const ViewModal: FC<Omit<ITodoModal, 'mode' | 'index'>> = ({todoItem, onCloseModal}) => {
   return (

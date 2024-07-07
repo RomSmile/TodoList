@@ -1,20 +1,24 @@
 import { FC, ReactNode } from "react"
 import { Button, Switch } from "antd"
 import { EditOutlined } from '@ant-design/icons'
-import { ITodoItemComponent } from "./types.ts"
-import { TodoStatusEnum } from "@/types.ts"
-import { useAppDispatch } from "@/hooks/redux.ts"
-import { changeTodoStatus } from "@/store/todoSlice"
-import { TodoItemViewMode } from "@/components/TodoList/types.ts"
+import { ITodoItemComponent } from "./types"
+import { TodoStatusEnum } from "@/types"
+import { useAppDispatch } from "@/hooks/redux"
+import { TodoItemViewMode } from "@/components/TodoList/types"
 import './style.scss'
+import { updateTodoItem } from "@/store/todoSlice/actions"
 
-const TodoItem: FC<ITodoItemComponent> = ({ title, status, index, setOpenModal, id}): ReactNode => {
+const TodoItem: FC<ITodoItemComponent> = ({ title, text, status, index, setOpenModal, id}) => {
   const dispatch = useAppDispatch()
 
   const changeStatus = (): void => {
-    dispatch(changeTodoStatus({
-      id,
-      status: status === TodoStatusEnum.finished ? TodoStatusEnum.notFinished : TodoStatusEnum.finished
+    dispatch(updateTodoItem({
+      todoItem: {
+        title,
+        text,
+        id,
+        status: status === TodoStatusEnum.finished ? TodoStatusEnum.notFinished : TodoStatusEnum.finished
+      }
     }))
   }
 

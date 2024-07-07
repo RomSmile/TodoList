@@ -1,5 +1,5 @@
-import { ITodoItem } from "@/types.ts"
-import { TodoItemViewMode } from "@/components/TodoList/types.ts"
+import { ITodoItem } from "@/types"
+import { TodoItemViewMode } from "@/components/TodoList/types"
 
 export interface ITodoModal {
   mode: TodoItemViewMode

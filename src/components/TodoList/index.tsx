@@ -1,17 +1,24 @@
-import {useAppSelector} from "@/hooks/redux.ts"
-import {ReactNode, useMemo, useState} from "react"
-import {ModalStateType, TodoItemViewMode} from "@/components/TodoList/types.ts"
-import {TodoStatusEnum} from "@/types.ts"
+import {useAppSelector, useAppDispatch} from "@/hooks/redux"
+import {FC, useEffect, useMemo, useState} from "react"
+import {ModalStateType, TodoItemViewMode} from "@/components/TodoList/types"
+import {TodoStatusEnum} from "@/types"
 import {TodoModal} from "@/components"
 import TodoItem from "./components/TodoItem"
 import {Button, Radio, RadioChangeEvent} from "antd"
+import { RootState } from "../../store"
+import { ITodoItem } from "@/types"
 import './style.scss'
+import { getTodos } from "@/store/todoSlice/actions"
 
-
-const TodoList = (): ReactNode => {
+const TodoList: FC = () => {
   const [openModal, setOpenModal] = useState<ModalStateType>(null)
   const [filterValue, setFilterValue] = useState<TodoStatusEnum | null>(null)
-  const { todos } = useAppSelector((state) => state.todo)
+  const { todos, loading, error } = useAppSelector((state: RootState) => state.todo)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(getTodos({}));
+  }, [])
 
   const onCloseModal = (): void => {
     setOpenModal(null)
@@ -29,12 +36,12 @@ const TodoList = (): ReactNode => {
     if (filterValue === null) {
       return todos
     } else {
-      return todos.filter((todoItem) => todoItem.status === filterValue)
+      return todos.filter((todoItem: ITodoItem) => todoItem.status === filterValue)
     }
   }, [filterValue, todos])
 
   return (
-    <>
+    loading ? <>Loading ...</> : <>
       {Boolean(todos.length) &&
         <Radio.Group onChange={onChangeFilter} defaultValue={null}>
           <Radio.Button value={null}>All</Radio.Button>
@@ -43,8 +50,10 @@ const TodoList = (): ReactNode => {
         </Radio.Group>
       }
       <ul className="todo-list">
-        {outputTodos.map((todo, index) =>
-          <TodoItem key={todo.id} index={index} {...todo} setOpenModal={setOpenModal} />
+        {Boolean(todos.length) && (
+          outputTodos.map((todo: ITodoItem, index: number) =>
+            <TodoItem key={todo.id} index={index} {...todo} setOpenModal={setOpenModal} />
+          )
         )}
 
         {!todos.length &&

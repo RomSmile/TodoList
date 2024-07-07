@@ -1,9 +1,9 @@
 import { Input, Modal } from "antd"
 import { ChangeEvent, FC, useState } from "react"
-import { ITodoItem, TodoStatusEnum } from "@/types.ts"
-import { addTodo, editTodoItem } from "@/store/todoSlice"
-import { useAppDispatch } from "@/hooks/redux.ts"
-import { ITodoModal } from "@/components/TodoModal/types.ts"
+import { ITodoItem, TodoStatusEnum } from "@/types"
+import { useAppDispatch } from "@/hooks/redux"
+import { ITodoModal } from "@/components/TodoModal/types"
+import { createTodo, updateTodoItem } from "@/store/todoSlice/actions"
 
 const EditModal: FC<Omit<ITodoModal, 'mode' | 'index'>> = ({
   todoItem,
@@ -23,9 +23,14 @@ const EditModal: FC<Omit<ITodoModal, 'mode' | 'index'>> = ({
 
   const onSaveTodoItem = (): void => {
     if (todoItem === null) {
-      dispatch(addTodo(newTodoItem as ITodoItem))
+      dispatch(createTodo(newTodoItem as ITodoItem))
     } else {
-      dispatch(editTodoItem({ id: todoItem.id, todoItem: newTodoItem as ITodoItem }))
+      dispatch(updateTodoItem({ todoItem: {
+        title: newTodoItem?.title,
+        text: newTodoItem?.text,
+        id: todoItem.id,
+        status: todoItem.status
+      } as ITodoItem }))
     }
     onCloseModal()
   }
