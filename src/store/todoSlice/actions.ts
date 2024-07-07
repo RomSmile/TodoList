@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { ITodoItem, TodoStatusEnum } from "@/types";
@@ -25,15 +24,16 @@ export const createTodo = createAsyncThunk<
   { rejectValue: string }
 >("createTodo", async (params, { rejectWithValue }) => {
   try {
+    const id = Math.floor(Math.random() * (1000000 - 9999999 + 1) + 1000000)
     const response = await axios.post(`${document.location.href}api/todos`, {
       ...params,
-      id: String(Math.floor(Math.random() * (1000000 - 9999999 + 1) + 1000000)),
+      id: String(id <= 0 ? id * -1 : id),
       status: TodoStatusEnum.notFinished 
     })
 
     return { status: response.status, message: "success", todoItem: {
       ...params,
-      id: String(Math.floor(Math.random() * (1000000 - 9999999 + 1) + 1000000)),
+      id: String(id <= 0 ? id * -1 : id),
       status: TodoStatusEnum.notFinished 
     }}
   } catch (e: any) {
