@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { ITodoItem, TodoStatusEnum } from "@/types"
-import { validateTodoItem } from "@/store/todoSlice/helpers"
+import { ITodoItem } from "@/types"
 import { createTodo, getTodos, updateTodoItem } from "./actions"
 import {toast} from "react-toastify";
 

@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react"
+import { FC } from "react"
 import { Button, Switch } from "antd"
 import { EditOutlined } from '@ant-design/icons'
 import { ITodoItemComponent } from "./types"
@@ -8,7 +8,7 @@ import { TodoItemViewMode } from "@/components/TodoList/types"
 import './style.scss'
 import { updateTodoItem } from "@/store/todoSlice/actions"
 
-const TodoItem: FC<ITodoItemComponent> = ({ title, text, status, index, setOpenModal, id}) => {
+const TodoItem: FC<ITodoItemComponent> = ({ title, text, status, setOpenModal, id}) => {
   const dispatch = useAppDispatch()
 
   const changeStatus = (): void => {
