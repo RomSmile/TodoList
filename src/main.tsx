@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { Provider } from "react-redux"
 import { store } from "./store"
 import { ToastContainer } from "react-toastify"
-import App from './App.tsx'
+import App from './App'
 import './index.scss'
 import 'react-toastify/dist/ReactToastify.css'
 

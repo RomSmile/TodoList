@@ -1,8 +1,7 @@
-import { ReactNode } from "react"
 import { TodoList, Header } from "@/components"
 import './App.scss'
 
-function App(): ReactNode {
+function App() {
   return (
     <>
       <Header />

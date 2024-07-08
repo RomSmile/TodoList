@@ -4,7 +4,7 @@ export enum TodoStatusEnum {
 }
 
 export interface ITodoItem {
-  id: string
+  id: number
   title: string
   text: string
   status: TodoStatusEnum

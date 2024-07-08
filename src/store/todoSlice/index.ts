@@ -20,22 +20,7 @@ const initialState: IInitialState = {
 export const TodoSlice = createSlice({
   name: 'TodoStore',
   initialState,
-  reducers: {
-    changeTodoStatus: (state, action: PayloadAction<{ id: string, status: TodoStatusEnum}>) => {
-      const { id, status } = action.payload
-      const indexOfTodo = state.todos.findIndex((todoItem) => todoItem.id === id)
-
-      state.todos[indexOfTodo].status = status
-    },
-    editTodoItem: (state, action: PayloadAction<{ id: string, todoItem: ITodoItem}>) => {
-      const { id, todoItem } = action.payload
-      const indexOfTodo = state.todos.findIndex((todoItem) => todoItem.id === id)
-
-      if (validateTodoItem(action.payload.todoItem)) {
-        state.todos[indexOfTodo] = todoItem
-      }
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     ///get
     builder.addCase(getTodos.pending, (state: IInitialState) => {
@@ -44,8 +29,7 @@ export const TodoSlice = createSlice({
 
     builder.addCase(getTodos.fulfilled, (state: IInitialState, action: PayloadAction<ITodoItem[]>) => {
       const { payload } = action;
-
-      state.todos = payload;
+      state.todos = [ ...payload ];
       state.loading = false;
       state.error = '';
     })
@@ -68,7 +52,7 @@ export const TodoSlice = createSlice({
         type: 'success',
       })
 
-      state.todos = [ ...state.todos, todoItem];
+      state.todos = [ ...state.todos, { ...todoItem }];
       state.loading = false;
       state.error = '';
     })
@@ -89,7 +73,7 @@ export const TodoSlice = createSlice({
         type: 'success',
       })
 
-      state.todos = state.todos.map(item => item.id === todoItem.id ? todoItem : item);
+      state.todos = [ ...state.todos ].map(item => item.id === todoItem.id ? { ...todoItem } : item);
       state.loading = false;
       state.error = '';
     })

@@ -10,10 +10,10 @@ const EditModal: FC<Omit<ITodoModal, 'mode' | 'index'>> = ({
   onCloseModal,
 }) => {
   const dispatch = useAppDispatch()
-  const [newTodoItem, setNewTodoItem] = useState<ITodoItem | null>(
+  const [newTodoItem, setNewTodoItem] = useState<ITodoItem>(
     todoItem === null
-      ? { title: '', text: '', id: '', status: TodoStatusEnum.notFinished }
-      : todoItem
+      ? { title: '', text: '', id: 100000002, status: TodoStatusEnum.notFinished }
+      : { ...todoItem }
   )
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>): void => {

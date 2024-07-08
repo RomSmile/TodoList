@@ -25,25 +25,17 @@ const TodoList: FC = () => {
   }
 
   const onAddNewItem = (): void => {
-    setOpenModal({ mode: TodoItemViewMode.edit, todoItemIndex: -1})
+    setOpenModal({ mode: TodoItemViewMode.edit, todoItemId: -1})
   }
 
   const onChangeFilter = (e: RadioChangeEvent): void => {
     setFilterValue(e.target.value)
   }
 
-  const outputTodos = useMemo(() => {
-    if (filterValue === null) {
-      return todos
-    } else {
-      return todos.filter((todoItem: ITodoItem) => todoItem.status === filterValue)
-    }
-  }, [filterValue, todos])
-
   return (
     loading ? <>Loading ...</> : <>
       {Boolean(todos.length) &&
-        <Radio.Group onChange={onChangeFilter} defaultValue={null}>
+        <Radio.Group onChange={(e) => onChangeFilter(e)} defaultValue={null}>
           <Radio.Button value={null}>All</Radio.Button>
           <Radio.Button value={TodoStatusEnum.notFinished}>Process</Radio.Button>
           <Radio.Button value={TodoStatusEnum.finished}>Finished</Radio.Button>
@@ -51,9 +43,13 @@ const TodoList: FC = () => {
       }
       <ul className="todo-list">
         {Boolean(todos.length) && (
-          outputTodos.map((todo: ITodoItem, index: number) =>
-            <TodoItem key={todo.id} index={index} {...todo} setOpenModal={setOpenModal} />
-          )
+          filterValue === null
+          ? [ ...todos ].map((todo: ITodoItem, index: number) =>
+              <TodoItem key={todo.id} index={index} {...todo} setOpenModal={setOpenModal} />
+            )
+          : [ ...todos ].filter((todoItem: ITodoItem) => todoItem.status === filterValue).map((todo: ITodoItem, index: number) =>
+              <TodoItem key={todo.id} index={index} {...todo} setOpenModal={setOpenModal} />
+            )
         )}
 
         {!todos.length &&
@@ -62,11 +58,11 @@ const TodoList: FC = () => {
           </h2>
         }
       </ul>
-      <Button color="primiry" onClick={onAddNewItem}>add new todoItem</Button>
+      <Button color="primary" onClick={() => onAddNewItem()}>add new todoItem</Button>
       {openModal !== null &&
         <TodoModal
           mode={openModal.mode}
-          todoItem={openModal.todoItemIndex < 0 ? null : outputTodos[openModal.todoItemIndex]}
+          todoItem={openModal.todoItemId < 0 ? null : todos.find(todo => todo.id == openModal.todoItemId) as ITodoItem}
           onCloseModal={onCloseModal}
         />
       }

@@ -24,24 +24,24 @@ const TodoItem: FC<ITodoItemComponent> = ({ title, text, status, index, setOpenM
 
   const onReadItemModal = (): void => {
     setOpenModal({
-      todoItemIndex: index,
+      todoItemId: id,
       mode: TodoItemViewMode.read
     })
   }
 
   const onEditItemModal = (): void => {
     setOpenModal({
-      todoItemIndex: index,
+      todoItemId: id,
       mode: TodoItemViewMode.edit
     })
   }
 
   return (
     <li className="todo-list-item">
-      <p onClick={onReadItemModal}>{title}</p>
+      <p onClick={() => onReadItemModal()}>{title}</p>
       <div className="todo-list-item__buttons-container">
         <Button
-          onClick={onEditItemModal}
+          onClick={() => onEditItemModal()}
           type="primary"
           shape="circle"
           icon={<EditOutlined />}
@@ -51,7 +51,7 @@ const TodoItem: FC<ITodoItemComponent> = ({ title, text, status, index, setOpenM
           checkedChildren="finished"
           unCheckedChildren="progress"
           checked={TodoStatusEnum['finished'] === status}
-          onClick={changeStatus}
+          onClick={() => changeStatus()}
         />
       </div>
     </li>

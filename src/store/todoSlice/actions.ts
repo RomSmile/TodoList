@@ -27,13 +27,13 @@ export const createTodo = createAsyncThunk<
     const id = Math.floor(Math.random() * (1000000 - 9999999 + 1) + 1000000)
     const response = await axios.post(`${document.location.href}api/todos`, {
       ...params,
-      id: String(id <= 0 ? id * -1 : id),
+      id: id <= 0 ? id * -1 : id,
       status: TodoStatusEnum.notFinished 
     })
 
     return { status: response.status, message: "success", todoItem: {
       ...params,
-      id: String(id <= 0 ? id * -1 : id),
+      id: id <= 0 ? id * -1 : id,
       status: TodoStatusEnum.notFinished 
     }}
   } catch (e: any) {

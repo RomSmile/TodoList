@@ -5,5 +5,5 @@ export enum TodoItemViewMode {
 
 export type ModalStateType = {
   mode: TodoItemViewMode
-  todoItemIndex: number
+  todoItemId: number
 } | null
